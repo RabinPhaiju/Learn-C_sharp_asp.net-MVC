@@ -1,0 +1,99 @@
+﻿@model MvcDaybook.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.photo)
+        </dt>
+
+        <dd>
+            <img width="50px" src=@Html.DisplayFor(model => model.photo) />
+
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.min_quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.min_quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.purchase_price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.purchase_price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.warranty)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.warranty)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id },new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

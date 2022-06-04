@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "City List";
+}
+
+<h2>This is the hello mvc</h2>
+<h1>@ViewBag.Title</h1>
+<ul>
+    @foreach(string country in ViewBag.Cities)
+            {
+    <li>@country</li>
+            }
+</ul>
+<ul>
+    @foreach (string country in ((List<string>)ViewData["Cities"]))
+    {
+        <li>@country</li>
+    }
+</ul>
+<h1>@TempData["name"]</h1>
+
+@{ 
+    TempData["name"] = "xyz";
+}
+

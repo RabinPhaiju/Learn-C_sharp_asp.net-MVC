@@ -1,0 +1,49 @@
+﻿
+@model WebApplicationTest.Models.LoginModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Index</h2>
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+</hgroup>
+
+<section id="loginForm">
+    <h2>use a local account to login.</h2>
+    @using (Html.BeginForm(new {ReturnUrl = ViewBag.ReturnUrl }))
+            {
+                @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <legend>Login Form</legend>
+            <ol>
+                <li>
+                    @Html.LabelFor(m => m.Name)
+                    @Html.TextBoxFor(m=>m.Name)
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password)
+                </li>
+                <li>
+                    @Html.CheckBoxFor(m=>m.RememberMe)
+                    @Html.LabelFor(m=>m.RememberMe, new { @class="checkbox"})
+                </li>
+            </ol>
+            <input type="submit" value="login"/>
+        </fieldset>
+        <p>@Html.ActionLink("Register","Register") if you dont have an account.</p>
+
+            }
+
+</section>
+<section class="social" id="socialLoginForm">
+    <h2>Use another service to login.</h2>
+    @Html.ActionLink("Click","ExternalLoginsList", new {returnUrl = ViewBag.ReturnUrl})
+</section>
+@Html.Partial("_Contacts")
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")}

@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MusicStoreDBContext.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MusicStoreDBContextStoreContainer">
+    <EntitySet Name="Albums" EntityType="MusicStoreDBContext.Store.Albums" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Genres" EntityType="MusicStoreDBContext.Store.Genres" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Artists" EntityType="MusicStoreDBContext.Store.Artists" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="AlbumsGenres" Association="MusicStoreDBContext.Store.AlbumsGenres">
+      <End Role="Albums" EntitySet="Albums" />
+      <End Role="Genres" EntitySet="Genres" />
+    </AssociationSet>
+    <AssociationSet Name="AlbumsArtists" Association="MusicStoreDBContext.Store.AlbumsArtists">
+      <End Role="Albums" EntitySet="Albums" />
+      <End Role="Artists" EntitySet="Artists" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Albums">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AlbumArtUrl" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ReleaseDate" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Genre_Id" Type="int" Nullable="false" />
+    <Property Name="Artist_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Genres">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Artists">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="AlbumsGenres">
+    <End Role="Albums" Type="MusicStoreDBContext.Store.Albums" Multiplicity="*" />
+    <End Role="Genres" Type="MusicStoreDBContext.Store.Genres" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Genres">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Albums">
+        <PropertyRef Name="Genre_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AlbumsArtists">
+    <End Role="Albums" Type="MusicStoreDBContext.Store.Albums" Multiplicity="*" />
+    <End Role="Artists" Type="MusicStoreDBContext.Store.Artists" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Artists">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Albums">
+        <PropertyRef Name="Artist_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MusicStoreDBContext" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="MusicStoreDBContextContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Albums" EntityType="MusicStoreDBContext.Albums" />
+          <EntitySet Name="Genres" EntityType="MusicStoreDBContext.Genres" />
+          <EntitySet Name="Artists" EntityType="MusicStoreDBContext.Artists" />
+          <AssociationSet Name="AlbumsGenres" Association="MusicStoreDBContext.AlbumsGenres">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="Genres" EntitySet="Genres" />
+          </AssociationSet>
+          <AssociationSet Name="AlbumsArtists" Association="MusicStoreDBContext.AlbumsArtists">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="Artists" EntitySet="Artists" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Albums">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Title" Nullable="false" Type="String" />
+          <Property Name="AlbumArtUrl" Nullable="true" Type="String" />
+          <Property Name="ReleaseDate" Type="String" Nullable="true" />
+          <NavigationProperty Name="Genre" Relationship="MusicStoreDBContext.AlbumsGenres" FromRole="Albums" ToRole="Genres" />
+          <NavigationProperty Name="Artist" Relationship="MusicStoreDBContext.AlbumsArtists" FromRole="Albums" ToRole="Artists" />
+        </EntityType>
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="true" />
+          <NavigationProperty Name="Albums" Relationship="MusicStoreDBContext.AlbumsGenres" FromRole="Genres" ToRole="Albums" />
+        </EntityType>
+        <EntityType Name="Artists">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Albums" Relationship="MusicStoreDBContext.AlbumsArtists" FromRole="Artists" ToRole="Albums" />
+        </EntityType>
+        <Association Name="AlbumsGenres">
+          <End Type="MusicStoreDBContext.Albums" Role="Albums" Multiplicity="*" />
+          <End Type="MusicStoreDBContext.Genres" Role="Genres" Multiplicity="1" />
+        </Association>
+        <Association Name="AlbumsArtists">
+          <End Type="MusicStoreDBContext.Albums" Role="Albums" Multiplicity="*" />
+          <End Type="MusicStoreDBContext.Artists" Role="Artists" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MusicStoreDBContextStoreContainer" CdmEntityContainer="MusicStoreDBContextContainer">
+    <EntitySetMapping Name="Albums">
+      <EntityTypeMapping TypeName="IsTypeOf(MusicStoreDBContext.Albums)">
+        <MappingFragment StoreEntitySet="Albums">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="AlbumArtUrl" ColumnName="AlbumArtUrl" />
+          <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Genres">
+      <EntityTypeMapping TypeName="IsTypeOf(MusicStoreDBContext.Genres)">
+        <MappingFragment StoreEntitySet="Genres">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Artists">
+      <EntityTypeMapping TypeName="IsTypeOf(MusicStoreDBContext.Artists)">
+        <MappingFragment StoreEntitySet="Artists">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AlbumsGenres" TypeName="MusicStoreDBContext.AlbumsGenres" StoreEntitySet="Albums">
+      <EndProperty Name="Genres">
+        <ScalarProperty Name="Id" ColumnName="Genre_Id" />
+      </EndProperty>
+      <EndProperty Name="Albums">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AlbumsArtists" TypeName="MusicStoreDBContext.AlbumsArtists" StoreEntitySet="Albums">
+      <EndProperty Name="Artists">
+        <ScalarProperty Name="Id" ColumnName="Artist_Id" />
+      </EndProperty>
+      <EndProperty Name="Albums">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

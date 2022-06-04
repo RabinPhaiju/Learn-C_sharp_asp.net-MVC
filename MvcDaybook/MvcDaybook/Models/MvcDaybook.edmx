@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MvcDaybook.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MvcDaybookStoreContainer">
+    <EntitySet Name="Daybook_line" EntityType="MvcDaybook.Store.Daybook_line" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Daybook_order" EntityType="MvcDaybook.Store.Daybook_order" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Category" EntityType="MvcDaybook.Store.Category" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Product" EntityType="MvcDaybook.Store.Product" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Daybook" EntityType="MvcDaybook.Store.Daybook" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="DaybookDaybook_line" Association="MvcDaybook.Store.DaybookDaybook_line">
+      <End Role="Daybook" EntitySet="Daybook" />
+      <End Role="Daybook_line" EntitySet="Daybook_line" />
+    </AssociationSet>
+    <AssociationSet Name="CategoryProduct" Association="MvcDaybook.Store.CategoryProduct">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="ProductDaybook_order" Association="MvcDaybook.Store.ProductDaybook_order">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Daybook_order" EntitySet="Daybook_order" />
+    </AssociationSet>
+    <AssociationSet Name="Daybook_lineDaybook_order" Association="MvcDaybook.Store.Daybook_lineDaybook_order">
+      <End Role="Daybook_line" EntitySet="Daybook_line" />
+      <End Role="Daybook_order" EntitySet="Daybook_order" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Daybook_line">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="total" Type="float" Nullable="false" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="DaybookId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Daybook_order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="s_price" Type="float" Nullable="false" />
+    <Property Name="quantity" Type="bigint" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="Daybook_lineId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="code" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="photo" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="quantity" Type="bigint" Nullable="false" />
+    <Property Name="min_quantity" Type="bigint" Nullable="true" DefaultValue="0" />
+    <Property Name="price" Type="float" Nullable="false" />
+    <Property Name="code" Type="bigint" Nullable="false" />
+    <Property Name="purchase_price" Type="float" Nullable="false" />
+    <Property Name="warranty" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CategoryId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Daybook">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="user" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="month" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="DaybookDaybook_line">
+    <End Role="Daybook" Type="MvcDaybook.Store.Daybook" Multiplicity="1" />
+    <End Role="Daybook_line" Type="MvcDaybook.Store.Daybook_line" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Daybook">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Daybook_line">
+        <PropertyRef Name="DaybookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CategoryProduct">
+    <End Role="Category" Type="MvcDaybook.Store.Category" Multiplicity="1" />
+    <End Role="Product" Type="MvcDaybook.Store.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductDaybook_order">
+    <End Role="Product" Type="MvcDaybook.Store.Product" Multiplicity="1" />
+    <End Role="Daybook_order" Type="MvcDaybook.Store.Daybook_order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Daybook_order">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Daybook_lineDaybook_order">
+    <End Role="Daybook_line" Type="MvcDaybook.Store.Daybook_line" Multiplicity="1" />
+    <End Role="Daybook_order" Type="MvcDaybook.Store.Daybook_order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Daybook_line">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Daybook_order">
+        <PropertyRef Name="Daybook_lineId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MvcDaybook" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="MvcDaybookContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Daybook_line" EntityType="MvcDaybook.Daybook_line" />
+          <EntitySet Name="Daybook_order" EntityType="MvcDaybook.Daybook_order" />
+          <EntitySet Name="Category" EntityType="MvcDaybook.Category" />
+          <EntitySet Name="Product" EntityType="MvcDaybook.Product" />
+          <EntitySet Name="Daybook" EntityType="MvcDaybook.Daybook" />
+          <AssociationSet Name="DaybookDaybook_line" Association="MvcDaybook.DaybookDaybook_line">
+            <End Role="Daybook" EntitySet="Daybook" />
+            <End Role="Daybook_line" EntitySet="Daybook_line" />
+          </AssociationSet>
+          <AssociationSet Name="CategoryProduct" Association="MvcDaybook.CategoryProduct">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="ProductDaybook_order" Association="MvcDaybook.ProductDaybook_order">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Daybook_order" EntitySet="Daybook_order" />
+          </AssociationSet>
+          <AssociationSet Name="Daybook_lineDaybook_order" Association="MvcDaybook.Daybook_lineDaybook_order">
+            <End Role="Daybook_line" EntitySet="Daybook_line" />
+            <End Role="Daybook_order" EntitySet="Daybook_order" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Daybook_line">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="total" Type="Double" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" />
+          <Property Name="DaybookId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Daybook" Relationship="MvcDaybook.DaybookDaybook_line" FromRole="Daybook_line" ToRole="Daybook" />
+          <NavigationProperty Name="Daybook_order" Relationship="MvcDaybook.Daybook_lineDaybook_order" FromRole="Daybook_line" ToRole="Daybook_order" />
+        </EntityType>
+        <EntityType Name="Daybook_order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="s_price" Type="Double" Nullable="false" />
+          <Property Name="quantity" Type="Int64" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="MvcDaybook.ProductDaybook_order" FromRole="Daybook_order" ToRole="Product" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Daybook_line" Relationship="MvcDaybook.Daybook_lineDaybook_order" FromRole="Daybook_order" ToRole="Daybook_line" />
+          <Property Name="Daybook_lineId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <Property Name="code" Type="String" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="MvcDaybook.CategoryProduct" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <Property Name="photo" Type="String" Nullable="false" />
+          <Property Name="quantity" Type="Int64" Nullable="false" />
+          <Property Name="min_quantity" Type="Int64" Nullable="true" DefaultValue="0" />
+          <Property Name="price" Type="Double" Nullable="false" />
+          <Property Name="code" Type="Int64" Nullable="false" />
+          <Property Name="purchase_price" Type="Double" Nullable="false" />
+          <Property Name="warranty" Type="String" Nullable="false" />
+          <Property Name="description" Type="String" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Category" Relationship="MvcDaybook.CategoryProduct" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="Daybook_order" Relationship="MvcDaybook.ProductDaybook_order" FromRole="Product" ToRole="Daybook_order" />
+        </EntityType>
+        <EntityType Name="Daybook">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <Property Name="user" Type="String" Nullable="false" />
+          <Property Name="month" Type="String" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Daybook_line" Relationship="MvcDaybook.DaybookDaybook_line" FromRole="Daybook" ToRole="Daybook_line" />
+        </EntityType>
+        <Association Name="DaybookDaybook_line">
+          <End Type="MvcDaybook.Daybook" Role="Daybook" Multiplicity="1" />
+          <End Type="MvcDaybook.Daybook_line" Role="Daybook_line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Daybook">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Daybook_line">
+              <PropertyRef Name="DaybookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CategoryProduct">
+          <End Type="MvcDaybook.Category" Role="Category" Multiplicity="1" />
+          <End Type="MvcDaybook.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductDaybook_order">
+          <End Type="MvcDaybook.Product" Role="Product" Multiplicity="1" />
+          <End Type="MvcDaybook.Daybook_order" Role="Daybook_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Daybook_order">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Daybook_lineDaybook_order">
+          <End Type="MvcDaybook.Daybook_line" Role="Daybook_line" Multiplicity="1" />
+          <End Type="MvcDaybook.Daybook_order" Role="Daybook_order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Daybook_line">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Daybook_order">
+              <PropertyRef Name="Daybook_lineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MvcDaybookStoreContainer" CdmEntityContainer="MvcDaybookContainer">
+    <EntitySetMapping Name="Daybook_line">
+      <EntityTypeMapping TypeName="IsTypeOf(MvcDaybook.Daybook_line)">
+        <MappingFragment StoreEntitySet="Daybook_line">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="DaybookId" ColumnName="DaybookId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Daybook_order">
+      <EntityTypeMapping TypeName="IsTypeOf(MvcDaybook.Daybook_order)">
+        <MappingFragment StoreEntitySet="Daybook_order">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="s_price" ColumnName="s_price" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="Daybook_lineId" ColumnName="Daybook_lineId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Category">
+      <EntityTypeMapping TypeName="IsTypeOf(MvcDaybook.Category)">
+        <MappingFragment StoreEntitySet="Category">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="code" ColumnName="code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Product">
+      <EntityTypeMapping TypeName="IsTypeOf(MvcDaybook.Product)">
+        <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="photo" ColumnName="photo" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="min_quantity" ColumnName="min_quantity" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="purchase_price" ColumnName="purchase_price" />
+          <ScalarProperty Name="warranty" ColumnName="warranty" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Daybook">
+      <EntityTypeMapping TypeName="IsTypeOf(MvcDaybook.Daybook)">
+        <MappingFragment StoreEntitySet="Daybook">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="user" ColumnName="user" />
+          <ScalarProperty Name="month" ColumnName="month" />
+          <ScalarProperty Name="date" ColumnName="date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

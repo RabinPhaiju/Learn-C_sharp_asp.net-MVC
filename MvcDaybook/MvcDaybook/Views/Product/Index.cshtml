@@ -1,0 +1,89 @@
+﻿@model IEnumerable<MvcDaybook.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Products</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", new { }, new { @class = "btn btn-primary text-white text-decoration-none" })
+</p>
+<table class="table">
+    <tr class="success">
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.photo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.min_quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.purchase_price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.warranty)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td style="padding-top:30px">
+        @Html.DisplayFor(modelItem => item.name)
+    </td>
+    <td>
+        <img width="50px" src=@Html.DisplayFor(modelItem => item.photo) />
+
+    </td>
+    <td style="padding-top:30px">
+        @Html.DisplayFor(modelItem => item.quantity)
+    </td>
+    <td style="padding-top:30px">
+        @Html.DisplayFor(modelItem => item.min_quantity)
+    </td>
+    <td style="padding-top:30px">
+        @Html.DisplayFor(modelItem => item.price)
+    </td>
+    <td style="padding-top:30px">
+        @Html.DisplayFor(modelItem => item.code)
+    </td>
+    <td style="padding-top:30px">
+        @Html.DisplayFor(modelItem => item.purchase_price)
+    </td>
+    <td style="padding-top:30px">
+        @Html.DisplayFor(modelItem => item.warranty)
+    </td>
+    <td style="padding-top:30px">
+        @Html.DisplayFor(modelItem => item.description)
+    </td>
+    <td style="padding-top:30px">
+        @Html.DisplayFor(modelItem => item.Category.name)
+    </td>
+    <td style="padding-top:30px">
+        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-success" })
+        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+    </td>
+</tr>
+    }
+
+</table>
